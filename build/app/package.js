@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const utils = require("./utils");
 function createElectronPackage(version, arch, platform) {
     return __awaiter(this, void 0, void 0, function* () {
+        const homeDir = utils.getHomeDir();
         console.log("Download Electron");
         const electronReleaseZip = yield utils.downloadElectron(version, arch, platform);
         console.log("Unzipping");
@@ -36,7 +37,7 @@ function createElectronPackage(version, arch, platform) {
         console.log("Creating Release Zip", releaseZipFile);
         yield utils.zip(releaseDir, releaseZipFile);
         console.log('Creating Github Release');
-        const credentials = yield utils.readJsonFile('~/.githubcreds');
+        const credentials = yield utils.readJsonFile(homeDir + '/.githubcreds');
         const releaseSettings = new utils.GitHubReleaseConfig;
         releaseSettings.token = credentials['ssms-pc'];
         releaseSettings.assets = [releaseZipFile];

@@ -8,6 +8,7 @@ const mv = require('mv');
 const fileexists = require('file-exists');
 const zipFolder = require('zip-folder');
 const publishRelease = require('publish-release');
+const homedir = require('homedir');
 import { spawn as yarnOrNPMSpawn , hasYarn } from 'yarn-or-npm';
 import * as fs from 'fs';
 
@@ -17,7 +18,7 @@ export function downloadElectron(version: string, arch: string, platform: string
         version: version,
         arch: arch,
         platform: platform,
-        cache: '~/.cache/SSMS-PC_builds' // defaults to <user's home directory>/.electron
+        cache: getHomeDir() + '/.cache/SSMS-PC_builds' // defaults to <user's home directory>/.electron
         }, function (err, zipPath) {
             if(err) {
                 reject(err);
@@ -143,10 +144,14 @@ export function createGithubRelease(release: GitHubReleaseConfig): Promise<strin
             if (err) {
                 return reject(err);
             } else {
-                resolve(release);
+                return resolve(release);
             }
         });
     });
+}
+
+export function getHomeDir() {
+    return homedir();
 }
 
 export class GitHubReleaseConfig implements GitHubReleaseConfig {

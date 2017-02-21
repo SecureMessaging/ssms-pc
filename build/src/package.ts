@@ -1,6 +1,7 @@
 import * as utils from './utils';
 
 export async function createElectronPackage(version: string, arch: string, platform: string) {
+    const homeDir = utils.getHomeDir();
     console.log("Download Electron");
     const electronReleaseZip = await utils.downloadElectron(version, arch, platform);
     console.log("Unzipping");
@@ -30,7 +31,7 @@ export async function createElectronPackage(version: string, arch: string, platf
 
     console.log('Creating Github Release');
 
-    const credentials = await utils.readJsonFile('~/.githubcreds');
+    const credentials = await utils.readJsonFile(homeDir + '/.githubcreds');
     const releaseSettings = new utils.GitHubReleaseConfig;
     releaseSettings.token = credentials['ssms-pc'];
     releaseSettings.assets = [releaseZipFile];

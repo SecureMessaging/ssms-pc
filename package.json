@@ -38,6 +38,7 @@
     "electron-packager": "^8.5.2",
     "electron-reload": "^1.0.3",
     "file-exists": "^3.0.1",
+    "homedir": "^0.6.0",
     "json-loader": "^0.5.4",
     "jsonfile": "^2.4.0",
     "mv": "^2.1.1",

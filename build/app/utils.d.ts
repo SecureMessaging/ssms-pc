@@ -9,6 +9,7 @@ export declare function installDependencies(cwd: string): Promise<string>;
 export declare function fileExists(file: string): Promise<string>;
 export declare function zip(targetFolder: string, targetFile: string): Promise<string>;
 export declare function createGithubRelease(release: GitHubReleaseConfig): Promise<string>;
+export declare function getHomeDir(): any;
 export declare class GitHubReleaseConfig implements GitHubReleaseConfig {
     token: string;
     owner: string;

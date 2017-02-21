@@ -17,6 +17,7 @@ const mv = require('mv');
 const fileexists = require('file-exists');
 const zipFolder = require('zip-folder');
 const publishRelease = require('publish-release');
+const homedir = require('homedir');
 const yarn_or_npm_1 = require("yarn-or-npm");
 const fs = require("fs");
 function downloadElectron(version, arch, platform) {
@@ -25,7 +26,7 @@ function downloadElectron(version, arch, platform) {
             version: version,
             arch: arch,
             platform: platform,
-            cache: '~/.cache/SSMS-PC_builds' // defaults to <user's home directory>/.electron
+            cache: getHomeDir() + '/.cache/SSMS-PC_builds' // defaults to <user's home directory>/.electron
         }, function (err, zipPath) {
             if (err) {
                 reject(err);
@@ -167,6 +168,10 @@ function createGithubRelease(release) {
     });
 }
 exports.createGithubRelease = createGithubRelease;
+function getHomeDir() {
+    return homedir();
+}
+exports.getHomeDir = getHomeDir;
 class GitHubReleaseConfig {
     constructor() {
         this.notes = '';
