@@ -1,6 +1,6 @@
 {
   "name": "ssms-pc",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "app/main.js",
   "scripts": {

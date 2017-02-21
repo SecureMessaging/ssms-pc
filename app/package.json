@@ -1,7 +1,8 @@
 {
   "name": "ssms-pc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "main.js",
+  "license": "MIT",
   "dependencies": {
     "euara-bs": "^0.0.2",
     "copy-dir": "^0.3.0",

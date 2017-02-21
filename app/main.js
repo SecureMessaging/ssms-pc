@@ -16,7 +16,7 @@ function createWindow() {
   
   win.loadURL(`file://${__dirname}/index.html`, {"extraHeaders" : "pragma: no-cache\n"});
   // show the dev tools
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 
   win.on('message', (x) => console.log(x));
 
