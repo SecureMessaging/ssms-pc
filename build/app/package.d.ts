@@ -1,1 +1,6 @@
-export declare function createElectronPackage(version: string, arch: string, platform: string): Promise<string>;
+export declare function createElectronPackage(config: PackageConfig): Promise<string>;
+export declare class PackageConfig {
+    version: string;
+    arch: string;
+    platform: string;
+}

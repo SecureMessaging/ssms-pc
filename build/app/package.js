@@ -8,11 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const utils = require("./utils");
-function createElectronPackage(version, arch, platform) {
+function createElectronPackage(config) {
     return __awaiter(this, void 0, void 0, function* () {
         const homeDir = utils.getHomeDir();
         console.log("Download Electron");
-        const electronReleaseZip = yield utils.downloadElectron(version, arch, platform);
+        const electronReleaseZip = yield utils.downloadElectron(config.version, config.arch, config.platform);
         console.log("Unzipping");
         const releaseDir = yield utils.unZip(electronReleaseZip);
         console.log("Coping App to ", releaseDir);
@@ -24,7 +24,7 @@ function createElectronPackage(version, arch, platform) {
         let targetRename, destRename;
         const releaseName = packageJson.electronName;
         const releaseVersion = packageJson.version;
-        if (platform === 'win32') {
+        if (config.platform === 'win32') {
             targetRename = releaseDir + '/electron.exe';
             destRename = releaseDir + '/' + packageJson.electronName + '.exe';
         }
@@ -33,7 +33,8 @@ function createElectronPackage(version, arch, platform) {
             destRename = releaseDir + '/' + packageJson.electronName;
         }
         yield utils.renameFile(targetRename, destRename);
-        const releaseZipFile = __dirname + '/../../out/' + `${releaseName}-v${releaseVersion}-${platform}-${arch}.zip`;
+        const releasePackageName = `${releaseName}-v${releaseVersion}-${config.platform}-${config.arch}.zip`;
+        const releaseZipFile = __dirname + '/../../out/' + releasePackageName;
         console.log("Creating Release Zip", releaseZipFile);
         yield utils.zip(releaseDir, releaseZipFile);
         console.log('Creating Github Release');
@@ -46,10 +47,14 @@ function createElectronPackage(version, arch, platform) {
         releaseSettings.draft = true;
         releaseSettings.prerelease = true;
         releaseSettings.tag = releaseVersion;
-        releaseSettings.name = `${releaseName}-v${releaseVersion}-${platform}-${arch}.zip`;
+        releaseSettings.name = releasePackageName;
         releaseSettings.notes = packageJson.notes || '';
-        return yield utils.createGithubRelease(releaseSettings);
+        yield utils.createGithubRelease(releaseSettings);
+        return releasePackageName;
     });
 }
 exports.createElectronPackage = createElectronPackage;
+class PackageConfig {
+}
+exports.PackageConfig = PackageConfig;
 //# sourceMappingURL=package.js.map

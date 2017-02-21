@@ -1,9 +1,11 @@
 "use strict";
 const package_1 = require("./package");
-/*createElectronPackage('1.6.0', 'x64' , 'linux')
-    .then(r => console.log(r))
-    .catch(e => console.log(e));*/
-package_1.createElectronPackage('1.6.0', 'x64', 'win32')
-    .then(r => console.log(r))
-    .catch(e => console.log(e));
+const electronVersion = '1.6.0';
+const releases = [
+    { version: electronVersion, arch: 'x64', platform: 'win32' },
+    { version: electronVersion, arch: 'x64', platform: 'linux' }
+];
+Promise.all(releases.map(config => package_1.createElectronPackage(config)))
+    .then(results => results.forEach(r => console.log('Created Release', r)))
+    .catch(error => console.log('Error Creating Releases ', error));
 //# sourceMappingURL=index.js.map

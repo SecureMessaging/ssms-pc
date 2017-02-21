@@ -1,9 +1,10 @@
 import * as utils from './utils';
 
-export async function createElectronPackage(version: string, arch: string, platform: string) {
+export async function createElectronPackage(config: PackageConfig) {
+
     const homeDir = utils.getHomeDir();
     console.log("Download Electron");
-    const electronReleaseZip = await utils.downloadElectron(version, arch, platform);
+    const electronReleaseZip = await utils.downloadElectron(config.version, config.arch, config.platform);
     console.log("Unzipping");
     const releaseDir = await utils.unZip(electronReleaseZip);
     console.log("Coping App to ", releaseDir);
@@ -12,11 +13,10 @@ export async function createElectronPackage(version: string, arch: string, platf
     await utils.installDependencies(releaseDir + '/resources/app');
     const packageJson = require(releaseDir + '/resources/app/package.json');
 
-    console.log(releaseDir + '/' + packageJson.electronName);
     let targetRename, destRename;
     const releaseName = packageJson.electronName;
     const releaseVersion = packageJson.version;
-    if(platform === 'win32') {
+    if(config.platform === 'win32') {
         targetRename = releaseDir + '/electron.exe';
         destRename = releaseDir + '/' + packageJson.electronName + '.exe';
     } else {
@@ -25,7 +25,8 @@ export async function createElectronPackage(version: string, arch: string, platf
     } 
     await utils.renameFile(targetRename, destRename);
 
-    const releaseZipFile = __dirname + '/../../out/' + `${releaseName}-v${releaseVersion}-${platform}-${arch}.zip`;
+    const releasePackageName = `${releaseName}-v${releaseVersion}-${config.platform}-${config.arch}.zip`;
+    const releaseZipFile = __dirname + '/../../out/' + releasePackageName;
     console.log("Creating Release Zip", releaseZipFile);
     await utils.zip(releaseDir, releaseZipFile);
 
@@ -40,8 +41,14 @@ export async function createElectronPackage(version: string, arch: string, platf
     releaseSettings.draft = true;
     releaseSettings.prerelease = true;
     releaseSettings.tag = releaseVersion;
-    releaseSettings.name = `${releaseName}-v${releaseVersion}-${platform}-${arch}.zip`;
+    releaseSettings.name = releasePackageName;
     releaseSettings.notes = packageJson.notes || '';
+    await utils.createGithubRelease(releaseSettings)
+    return releasePackageName;
+}
 
-    return await utils.createGithubRelease(releaseSettings);
+export class PackageConfig {
+    version: string;
+    arch: string;
+    platform: string;
 }

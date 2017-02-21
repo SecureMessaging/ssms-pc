@@ -38,7 +38,7 @@ export async function unZip(zipFile: string): Promise<string> {
 
 export function newTmpDir(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-        tmp.dir(function _tempDirCreated(err, path, cleanupCallback) {
+        tmp.dir({unsafeCleanup: true}, function _tempDirCreated(err, path, cleanupCallback) {
             if (err) {
                 reject(err);
             } else {

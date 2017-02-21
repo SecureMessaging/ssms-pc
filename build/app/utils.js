@@ -162,7 +162,7 @@ function createGithubRelease(release) {
                 return reject(err);
             }
             else {
-                resolve(release);
+                return resolve(release);
             }
         });
     });

@@ -1,9 +1,12 @@
-import { createElectronPackage } from './package';
+import { createElectronPackage, PackageConfig } from './package';
 
-/*createElectronPackage('1.6.0', 'x64' , 'linux')
-    .then(r => console.log(r))
-    .catch(e => console.log(e));*/
+const electronVersion = '1.6.0'
 
-createElectronPackage('1.6.0', 'x64' , 'win32')
-    .then(r => console.log(r))
-    .catch(e => console.log(e));
+const releases: PackageConfig[] = [
+    {version: electronVersion, arch: 'x64', platform: 'win32'},
+    {version: electronVersion, arch: 'x64', platform: 'linux'}
+];
+
+Promise.all(releases.map(config => createElectronPackage(config)))
+.then(results => results.forEach(r => console.log('Created Release', r)))
+.catch(error => console.log('Error Creating Releases ', error));
