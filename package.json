@@ -1,0 +1,90 @@
+{
+  "name": "ssms-pc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "electron": "tsc && electron app",
+    "start": "tsc && electron-forge start",
+    "package": "tsc && electron-forge package",
+    "make": "tsc && electron-forge make"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "copy-dir": "^0.3.0",
+    "euara-bs": "^0.0.2",
+    "rxjs": "^5.0.1",
+    "tar": "^2.2.1",
+    "targz": "^1.0.1",
+    "tmp": "0.0.31",
+    "unzip": "^0.1.11"
+  },
+  "devDependencies": {
+    "@types/checksum": "^0.1.30",
+    "@types/electron": "^1.4.32",
+    "@types/request": "0.0.36",
+    "@types/rx": "^2.5.34",
+    "@types/webpack": "^2.0.0",
+    "babel-plugin-transform-async-to-generator": "^6.22.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-react": "^6.22.0",
+    "copy-dir": "^0.3.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "declaration-bundler-webpack-plugin": "^1.0.3",
+    "dtsbundler-webpack-plugin": "^1.0.0",
+    "electron-compile": "^5.1.3",
+    "electron-packager": "^8.5.2",
+    "electron-reload": "^1.0.3",
+    "file-exists": "^3.0.1",
+    "json-loader": "^0.5.4",
+    "jsonfile": "^2.4.0",
+    "mv": "^2.1.1",
+    "node-zip": "^1.1.1",
+    "npm": "^4.2.0",
+    "publish-release": "^1.3.3",
+    "rename": "^1.0.4",
+    "stream-to-promise": "^2.2.0",
+    "ts-loader": "^1.3.3",
+    "typescript": "^2.1.4",
+    "unzip": "^0.1.11",
+    "webpack": "^1.14.0",
+    "yarn-or-npm": "^2.0.3",
+    "zip-folder": "^1.0.0"
+  },
+  "build": {
+    "asar": false
+  },
+  "config": {
+    "build": {
+      "asar": false
+    },
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {},
+      "electronWinstallerConfig": {
+        "name": ""
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": ""
+      }
+    }
+  }
+}

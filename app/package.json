@@ -1,0 +1,15 @@
+{
+  "name": "ssms-pc",
+  "version": "0.0.1",
+  "main": "main.js",
+  "dependencies": {
+    "euara-bs": "^0.0.2",
+    "copy-dir": "^0.3.0",
+    "rxjs": "^5.0.1",
+    "tar": "^2.2.1",
+    "targz": "^1.0.1",
+    "tmp": "0.0.31",
+    "unzip": "^0.1.11"
+  },
+  "electronName": "SSMS"
+}
